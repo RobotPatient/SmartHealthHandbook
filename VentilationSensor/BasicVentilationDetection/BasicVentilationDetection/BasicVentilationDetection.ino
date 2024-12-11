@@ -22,7 +22,9 @@
 
 #include <Wire.h>
 #include "globalSettings.h"
-#include "helperMethods.h"
+#include "initHelpers.h"
+#include "outputHelpers.h"
+#include "measuringMethods.h"
 
 void setup() {
   initializeSerial();

@@ -1,3 +1,32 @@
+/*
+  Differential Pressure-Based Flow Measurement System
+  ---------------------------------------------------
+  
+  "measuringMethods.h" provides the globally defined attributes  
+
+  Author: J.A. Korten
+  Date: 12/11/2024
+*/
+
+float calculateFlowRate(float differentialPressure);
+
+// --- Measurement Control Functions ---
+bool shouldStartMeasurement(float differentialPressure) {
+  return !isMeasuring && differentialPressure > PRESSURE_THRESHOLD;
+}
+
+void startMeasurement() {
+  isMeasuring = true;
+  measurementStartTime = millis();
+  integratedVolume = 0.0;  // Reset integrated volume
+  lastUpdateTime = millis();  // Initialize update time
+  Serial.println("Measurement started...");
+}
+
+bool shouldContinueMeasurement(float differentialPressure) {
+  return differentialPressure > PRESSURE_THRESHOLD;
+}
+
 void updateMeasurement(float differentialPressure) {
   unsigned long currentTime = millis();
   float deltaTime = (currentTime - lastUpdateTime) / 1000.0;  // Convert ms to seconds
@@ -44,23 +73,4 @@ float calculateFlowRate(float differentialPressure) {
   float velocity = sqrt(2 * differentialPressure / AIR_DENSITY);  // m/s
   float flowRate = DISCHARGE_COEFFICIENT * ORIFICE_AREA * velocity;  // m^3/s
   return flowRate * 1e6;  // Convert m^3/s to mL/s
-}
-
-// --- Output Functions ---
-void printMeasurementStatus(float flowRate, float volume) {
-  Serial.print("Flow Rate: ");
-  Serial.print(flowRate);
-  Serial.print(" mL/s, Integrated Volume: ");
-  Serial.print(volume);
-  Serial.println(" mL");
-}
-
-void printFinalResults(float volume, float elapsedTime) {
-  Serial.println("Measurement stopped...");
-  Serial.print("Total Volume: ");
-  Serial.print(volume);
-  Serial.println(" mL");
-  Serial.print("Elapsed Time: ");
-  Serial.print(elapsedTime);
-  Serial.println(" seconds");
 }
