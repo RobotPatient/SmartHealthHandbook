@@ -2,7 +2,7 @@
   Differential Pressure-Based Flow Measurement System
   ---------------------------------------------------
   
-  "globalSettings.h" provides the globally defined attributes  
+  "initHelpers.h" provides the globally defined attributes  
 
   Author: J.A. Korten
   Date: 12/11/2024
