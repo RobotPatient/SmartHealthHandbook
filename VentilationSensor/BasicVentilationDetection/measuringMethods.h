@@ -62,7 +62,7 @@ float readDifferentialPressure() {
 
   if (Wire.available() >= 2) {
     int16_t rawPressure = Wire.read() << 8 | Wire.read();  // Combine MSB and LSB
-    return rawPressure / 60.0;  // Convert raw sensor data to Pascals (adjust for your sensor)
+    return pressurePaFromRawPressure(rawPressure);  // Convert raw sensor data to Pascals (adjust for your sensor)
   } else {
     Serial.println("Error: No data from sensor");
     return 0.0;
