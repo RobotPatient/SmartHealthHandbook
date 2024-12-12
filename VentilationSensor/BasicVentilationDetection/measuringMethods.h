@@ -9,6 +9,8 @@
 */
 
 float calculateFlowRate(float differentialPressure);
+float pressurePaFromRawPressure(float rawPressure);
+
 
 // --- Measurement Control Functions ---
 bool shouldStartMeasurement(float differentialPressure) {
@@ -73,4 +75,8 @@ float calculateFlowRate(float differentialPressure) {
   float velocity = sqrt(2 * differentialPressure / AIR_DENSITY);  // m/s
   float flowRate = DISCHARGE_COEFFICIENT * ORIFICE_AREA * velocity;  // m^3/s
   return flowRate * 1e6;  // Convert m^3/s to mL/s
+}
+
+float pressurePaFromRawPressure(float rawPressure) {
+  return rawPressure / PRESSURE_SENSOR_CONVERSION_FACTOR;
 }
